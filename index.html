@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#0a1929">
   <title>🔊 Bocina Gabriela</title>
-  
+
   <style>
     :root {
       --bg: #0a1929;
@@ -19,13 +19,9 @@
       --texto: #ffffff;
       --texto-suave: #b0bec5;
     }
-    
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: var(--bg);
@@ -33,34 +29,22 @@
       padding: 16px;
       min-height: 100vh;
     }
-    
-    .header {
-      text-align: center;
-      margin-bottom: 24px;
-    }
-    
-    .header h1 {
-      font-size: 24px;
-      margin-bottom: 8px;
-    }
-    
-    .header p {
-      color: var(--texto-suave);
-      font-size: 14px;
-    }
-    
+
+    .header { text-align: center; margin-bottom: 24px; }
+    .header h1 { font-size: 24px; margin-bottom: 8px; }
+    .header p { color: var(--texto-suave); font-size: 14px; }
+
     .card {
       background: var(--card);
       border-radius: 12px;
       padding: 20px;
       margin-bottom: 16px;
     }
-    
-    .progress-section {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    
+
+    .subtitulo { font-size: 16px; margin-bottom: 8px; color: var(--azul-claro); }
+
+    .progress-section { text-align: center; margin-bottom: 20px; }
+
     .progress-bar {
       background: rgba(255,255,255,0.1);
       border-radius: 8px;
@@ -68,62 +52,28 @@
       overflow: hidden;
       margin: 12px 0;
     }
-    
+
     .progress-fill {
       background: linear-gradient(90deg, var(--azul), var(--azul-claro));
       height: 100%;
       width: 0%;
       transition: width 0.3s;
     }
-    
-    .progress-text {
-      font-size: 18px;
-      font-weight: bold;
-      color: var(--azul-claro);
-    }
-    
-    .stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 16px;
-    }
-    
-    .stat {
-      text-align: center;
-    }
-    
-    .stat-label {
-      font-size: 12px;
-      color: var(--texto-suave);
-      margin-bottom: 4px;
-    }
-    
-    .stat-value {
-      font-size: 20px;
-      font-weight: bold;
-    }
-    
-    .stat-value.pagado {
-      color: var(--verde);
-    }
-    
-    .stat-value.falta {
-      color: var(--rojo);
-    }
-    
-    .semaforo {
-      text-align: center;
-      font-size: 32px;
-      margin: 16px 0;
-    }
-    
-    .semaforo-texto {
-      font-size: 14px;
-      color: var(--texto-suave);
-      margin-top: 4px;
-    }
-    
+
+    .progress-text { font-size: 18px; font-weight: bold; color: var(--azul-claro); }
+
+    .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+    .stat { text-align: center; }
+    .stat-label { font-size: 12px; color: var(--texto-suave); margin-bottom: 4px; }
+    .stat-value { font-size: 20px; font-weight: bold; }
+    .stat-value.pagado { color: var(--verde); }
+    .stat-value.falta { color: var(--rojo); }
+
+    .al-dia { text-align: center; font-size: 12px; color: var(--texto-suave); margin-top: 10px; }
+
+    .semaforo { text-align: center; font-size: 32px; margin: 16px 0; }
+    .semaforo-texto { font-size: 14px; color: var(--texto-suave); margin-top: 4px; }
+
     .proximo-pago {
       text-align: center;
       padding: 12px;
@@ -131,62 +81,25 @@
       border-radius: 8px;
       margin-top: 16px;
     }
-    
-    .proximo-pago-label {
-      font-size: 12px;
-      color: var(--texto-suave);
-    }
-    
-    .proximo-pago-fecha {
-      font-size: 18px;
-      font-weight: bold;
-      color: var(--azul-claro);
-      margin-top: 4px;
-    }
-    
-    .datos-bancarios {
-      font-size: 14px;
-    }
-    
-    .datos-bancarios h3 {
-      font-size: 16px;
-      margin-bottom: 12px;
-      color: var(--azul-claro);
-    }
-    
+    .proximo-pago-label { font-size: 12px; color: var(--texto-suave); }
+    .proximo-pago-fecha { font-size: 18px; font-weight: bold; color: var(--azul-claro); margin-top: 4px; }
+
+    .datos-bancarios { font-size: 14px; }
+    .datos-bancarios h3 { font-size: 16px; margin-bottom: 12px; color: var(--azul-claro); }
+
     .dato-row {
       display: flex;
       justify-content: space-between;
       padding: 8px 0;
       border-bottom: 1px solid rgba(255,255,255,0.1);
     }
-    
-    .dato-row:last-child {
-      border-bottom: none;
-    }
-    
-    .dato-label {
-      color: var(--texto-suave);
-    }
-    
-    .dato-value {
-      font-weight: bold;
-      text-align: right;
-    }
-    
-    .cuenta {
-      font-family: 'Courier New', monospace;
-      letter-spacing: 1px;
-      color: var(--amarillo);
-    }
-    
-    .botones {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-top: 24px;
-    }
-    
+    .dato-row:last-child { border-bottom: none; }
+    .dato-label { color: var(--texto-suave); }
+    .dato-value { font-weight: bold; text-align: right; }
+    .cuenta { font-family: 'Courier New', monospace; letter-spacing: 1px; color: var(--amarillo); }
+
+    .botones { display: flex; flex-direction: column; gap: 12px; margin-top: 24px; }
+
     .btn {
       background: var(--azul);
       color: white;
@@ -199,23 +112,11 @@
       transition: all 0.2s;
       min-height: 60px;
     }
-    
-    .btn:active {
-      transform: scale(0.98);
-    }
-    
-    .btn-registrar {
-      background: var(--verde);
-    }
-    
-    .btn-reporte {
-      background: var(--morado);
-    }
-    
-    .btn-historial {
-      background: var(--azul);
-    }
-    
+    .btn:active { transform: scale(0.98); }
+    .btn-registrar { background: var(--verde); }
+    .btn-reporte { background: var(--morado); }
+    .btn-historial { background: var(--azul); }
+
     .recordatorio {
       background: var(--amarillo);
       color: #000;
@@ -225,42 +126,120 @@
       margin-bottom: 16px;
       display: none;
     }
-    
-    .recordatorio.activo {
-      display: block;
+    .recordatorio.activo { display: block; }
+    .recordatorio.urgente { background: var(--rojo); color: white; }
+    .recordatorio-icono { font-size: 32px; margin-bottom: 8px; }
+    .recordatorio-texto { font-size: 16px; font-weight: bold; }
+
+    /* ===== MODAL REGISTRAR PAGO ===== */
+    .modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.75);
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      z-index: 100;
     }
-    
-    .recordatorio.urgente {
-      background: var(--rojo);
-      color: white;
+    .modal.activo { display: flex; }
+    .modal-caja {
+      background: var(--card);
+      width: 100%;
+      max-width: 480px;
+      border-radius: 20px 20px 0 0;
+      padding: 24px 20px 32px;
+      animation: subir 0.25s ease;
     }
-    
-    .recordatorio-icono {
-      font-size: 32px;
-      margin-bottom: 8px;
+    @keyframes subir { from { transform: translateY(100%); } to { transform: translateY(0); } }
+    .modal-caja h2 { font-size: 20px; margin-bottom: 16px; text-align: center; color: var(--azul-claro); }
+
+    .campo { margin-bottom: 16px; }
+    .campo label { display: block; font-size: 13px; color: var(--texto-suave); margin-bottom: 6px; }
+    .campo input {
+      width: 100%;
+      background: rgba(255,255,255,0.08);
+      border: 2px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      padding: 16px;
+      font-size: 18px;
+      color: var(--texto);
     }
-    
-    .recordatorio-texto {
+    .campo input:focus { outline: none; border-color: var(--azul); }
+
+    .modal-botones { display: flex; gap: 12px; margin-top: 8px; }
+    .btn-mini {
+      flex: 1;
+      border: none;
+      border-radius: 12px;
+      padding: 16px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      min-height: 56px;
+    }
+    .btn-cancelar { background: rgba(255,255,255,0.12); color: var(--texto); }
+    .btn-guardar { background: var(--verde); color: #fff; }
+
+    /* ===== TOAST ===== */
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%) translateY(140px);
+      background: var(--verde);
+      color: #fff;
+      padding: 14px 22px;
+      border-radius: 30px;
       font-size: 16px;
       font-weight: bold;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+      transition: transform 0.3s ease;
+      z-index: 200;
+      white-space: nowrap;
     }
+    .toast.activo { transform: translateX(-50%) translateY(0); }
+
+    /* ===== LISTA DE PAGOS ===== */
+    .pago-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .pago-row:last-child { border-bottom: none; }
+    .pago-monto { color: var(--verde); font-weight: bold; font-size: 17px; }
+    .pago-fecha { color: var(--texto-suave); font-size: 13px; margin-top: 2px; }
+    .btn-borrar {
+      background: rgba(239,83,80,0.2);
+      color: var(--rojo);
+      border: none;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 15px;
+      font-weight: bold;
+      min-width: 60px;
+      min-height: 44px;
+      cursor: pointer;
+    }
+    .btn-borrar.confirmado { background: var(--rojo); color: #fff; }
   </style>
 </head>
 <body>
-  
+
   <!-- Banner de recordatorio -->
   <div class="recordatorio" id="recordatorio">
     <div class="recordatorio-icono">🔔</div>
     <div class="recordatorio-texto" id="recordatorio-texto">¡Mañana toca pagar la bocina!</div>
   </div>
-  
+
   <!-- Header -->
   <div class="header">
     <h1>🔊 Bocina Gabriela</h1>
     <p>BOCINA AMPLIFICADA ALTO TS415</p>
     <p>$7,999 · 24 MSI · Banamex</p>
   </div>
-  
+
   <!-- Dashboard -->
   <div class="card">
     <div class="progress-section">
@@ -269,29 +248,31 @@
         <div class="progress-fill" id="progress-fill"></div>
       </div>
     </div>
-    
+
     <div class="stats">
       <div class="stat">
         <div class="stat-label">💰 Pagado</div>
-        <div class="stat-value pagado" id="stat-pagado">$0</div>
+        <div class="stat-value pagado" id="stat-pagado">$0.00</div>
       </div>
       <div class="stat">
         <div class="stat-label">📉 Falta</div>
-        <div class="stat-value falta" id="stat-falta">$7,999</div>
+        <div class="stat-value falta" id="stat-falta">$7,999.00</div>
       </div>
     </div>
-    
+
+    <div class="al-dia" id="al-dia">Deberías llevar: $0.00</div>
+
     <div class="semaforo">
       <span id="semaforo-icono">🟢</span>
       <div class="semaforo-texto" id="semaforo-texto">Al corriente</div>
     </div>
-    
+
     <div class="proximo-pago">
       <div class="proximo-pago-label">📅 Próximo pago</div>
       <div class="proximo-pago-fecha" id="proximo-pago-fecha">8 de noviembre 2026</div>
     </div>
   </div>
-  
+
   <!-- Datos bancarios -->
   <div class="card datos-bancarios">
     <h3>🏦 Datos para transferencia</h3>
@@ -312,22 +293,48 @@
       <span class="dato-value">$333.29</span>
     </div>
   </div>
-  
-  <!-- Botones de acción -->
-  <div class="botones">
-    <button class="btn btn-registrar" onclick="alert('Paso 3: Registrar pago')">➕ Registrar pago</button>
-    <button class="btn btn-reporte" onclick="alert('Paso 4: Reporte WhatsApp')">📱 Reporte WhatsApp</button>
-    <button class="btn btn-historial" onclick="alert('Paso 4: Historial')">📋 Ver historial</button>
+
+  <!-- Tus pagos -->
+  <div class="card" id="card-pagos" style="display:none;">
+    <h3 class="subtitulo">📋 Tus pagos</h3>
+    <div id="lista-pagos"></div>
   </div>
-  
-  <script>
+
+  <!-- Botones -->
+  <div class="botones">
+    <button class="btn btn-registrar" onclick="abrirModal()">➕ Registrar pago</button>
+    <button class="btn btn-reporte" onclick="mostrarToast('📱 Paso 4: Reporte WhatsApp')">📱 Reporte WhatsApp</button>
+    <button class="btn btn-historial" onclick="verHistorial()">📋 Ver historial</button>
+  </div>
+
+  <!-- Modal registrar pago -->
+  <div class="modal" id="modal">
+    <div class="modal-caja">
+      <h2>➕ Registrar pago</h2>
+      <div class="campo">
+        <label for="input-fecha">📅 Fecha del pago</label>
+        <input type="date" id="input-fecha">
+      </div>
+      <div class="campo">
+        <label for="input-monto">💰 Monto pagado</label>
+        <input type="number" id="input-monto" step="0.01" inputmode="decimal">
+      </div>
+      <div class="modal-botones">
+        <button class="btn-mini btn-cancelar" onclick="cerrarModal()">Cancelar</button>
+        <button class="btn-mini btn-guardar" onclick="guardarPago()">💾 Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">✅ Pago registrado</div>
+    <script>
     // ========================================
     // CONFIGURACIÓN DE LA COMPRA
     // ========================================
     const CONFIG = {
       producto: 'BOCINA AMPLIFICADA ALTO TS415',
-      fechaCompra: '2026-10-08', // YYYY-MM-DD
-      diaPago: 8, // Día de cada mes que se paga
+      fechaCompra: '2026-10-08',
+      diaPago: 8,
       total: 7999,
       meses: 24,
       pagoMensual: 333.29,
@@ -335,143 +342,261 @@
       beneficiario: 'Gabriela Aguilar Camacho',
       cuenta: '5256 7803 1206 2497'
     };
-    
+
     const STORAGE_KEY = 'bocina_gabriela_pagos';
-    
+    const MESES = ['enero','febrero','marzo','abril','mayo','junio',
+                   'julio','agosto','septiembre','octubre','noviembre','diciembre'];
+
     // ========================================
-    // FUNCIONES AUXILIARES
+    // AUXILIARES
     // ========================================
     function formatearDinero(n) {
-      return '$' + n.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      return '$' + Number(n).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
-    
+
+    function hoyISO() {
+      const d = new Date();
+      return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    }
+
+    function fechaBonita(iso) {
+      const p = iso.split('-').map(Number);
+      return p[2] + ' de ' + MESES[p[1] - 1] + ' ' + p[0];
+    }
+
     function obtenerPagos() {
-      const datos = localStorage.getItem(STORAGE_KEY);
-      return datos ? JSON.parse(datos) : [];
+      try {
+        const datos = localStorage.getItem(STORAGE_KEY);
+        return datos ? JSON.parse(datos) : [];
+      } catch (e) { return []; }
     }
-    
+
     function guardarPagos(pagos) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(pagos));
     }
-    
+
     // ========================================
     // CÁLCULO DE PROGRESO
     // ========================================
     function calcularProgreso() {
       const hoy = new Date();
-      const [year, month, day] = CONFIG.fechaCompra.split('-').map(Number);
-      const fechaCompra = new Date(year, month - 1, day);
-      
-      // Calcular cuántos pagos ya vencieron
+      hoy.setHours(12, 0, 0, 0); // fix de fechas: mediodía
+
+      const p = CONFIG.fechaCompra.split('-').map(Number);
+      const anio = p[0], mes = p[1];
+
+      // Primer vencimiento: mes siguiente a la compra, día CONFIG.diaPago
+      let prox = new Date(anio, mes, CONFIG.diaPago, 12, 0, 0);
+
       let mesesVencidos = 0;
-      let fechaComparacion = new Date(fechaCompra);
-      
-      while (true) {
-        fechaComparacion.setMonth(fechaComparacion.getMonth() + 1);
-        if (fechaComparacion <= hoy) {
-          mesesVencidos++;
-        } else {
-          break;
-        }
+      while (prox <= hoy) {
+        mesesVencidos++;
+        prox = new Date(prox.getFullYear(), prox.getMonth() + 1, CONFIG.diaPago, 12, 0, 0);
       }
-      
-      // Calcular próximo pago
-      const proximoPago = new Date(fechaCompra);
-      proximoPago.setMonth(proximoPago.getMonth() + mesesVencidos + 1);
-      
-      // Calcular total pagado
+
       const pagos = obtenerPagos();
-      const totalPagado = pagos.reduce((sum, p) => sum + p.monto, 0);
-      
-      // Calcular cuánto falta
-      const totalFalta = CONFIG.total - totalPagado;
-      
-      // Determinar semáforo
-      const pagosRegistrados = pagos.length;
+      const totalPagado = pagos.reduce((s, x) => s + Number(x.monto), 0);
+      const totalFalta = Math.max(0, CONFIG.total - totalPagado);
+
+      const deudaTeorica = mesesVencidos * CONFIG.pagoMensual;
+      const diferencia = totalPagado - deudaTeorica;
+
       let semaforo = 'verde';
       let semaforoTexto = 'Al corriente';
-      
-      if (pagosRegistrados < mesesVencidos - 1) {
+
+      if (diferencia < -CONFIG.pagoMensual - 0.5) {
+        const m = Math.floor((-diferencia) / CONFIG.pagoMensual);
         semaforo = 'rojo';
-        semaforoTexto = `${mesesVencidos - pagosRegistrados} meses atrasado`;
-      } else if (pagosRegistrados < mesesVencidos) {
+        semaforoTexto = m + (m === 1 ? ' mes atrasado' : ' meses atrasado');
+      } else if (diferencia < -0.5) {
         semaforo = 'amarillo';
         semaforoTexto = '1 mes atrasado';
       }
-      
+
       return {
         mesesVencidos,
-        proximoPago,
+        proximoPago: prox,
         totalPagado,
         totalFalta,
-        pagosRegistrados,
+        deudaTeorica,
+        pagosRegistrados: pagos.length,
         semaforo,
         semaforoTexto
       };
     }
-    
+
     // ========================================
-    // ACTUALIZAR INTERFAZ
+    // INTERFAZ
     // ========================================
     function actualizarUI() {
-      const progreso = calcularProgreso();
-      
-      // Progreso
-      document.getElementById('progress-text').textContent = 
-        `${progreso.pagosRegistrados} de ${CONFIG.meses} pagos`;
-      
-      const porcentaje = (progreso.pagosRegistrados / CONFIG.meses) * 100;
-      document.getElementById('progress-fill').style.width = porcentaje + '%';
-      
-      // Stats
-      document.getElementById('stat-pagado').textContent = formatearDinero(progreso.totalPagado);
-      document.getElementById('stat-falta').textContent = formatearDinero(progreso.totalFalta);
-      
-      // Semáforo
+      const pr = calcularProgreso();
+
+      document.getElementById('progress-text').textContent = pr.pagosRegistrados + ' de ' + CONFIG.meses + ' pagos';
+      document.getElementById('progress-fill').style.width = ((pr.pagosRegistrados / CONFIG.meses) * 100) + '%';
+
+      document.getElementById('stat-pagado').textContent = formatearDinero(pr.totalPagado);
+      document.getElementById('stat-falta').textContent = formatearDinero(pr.totalFalta);
+      document.getElementById('al-dia').textContent = 'Deberías llevar: ' + formatearDinero(pr.deudaTeorica);
+
       const iconos = { verde: '🟢', amarillo: '🟡', rojo: '🔴' };
-      document.getElementById('semaforo-icono').textContent = iconos[progreso.semaforo];
-      document.getElementById('semaforo-texto').textContent = progreso.semaforoTexto;
-      
-      // Próximo pago
-      const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 
-                     'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-      const prox = progreso.proximoPago;
-      document.getElementById('proximo-pago-fecha').textContent = 
-        `${CONFIG.diaPago} de ${meses[prox.getMonth()]} ${prox.getFullYear()}`;
+      document.getElementById('semaforo-icono').textContent = iconos[pr.semaforo];
+      document.getElementById('semaforo-texto').textContent = pr.semaforoTexto;
+
+      const pp = pr.proximoPago;
+      document.getElementById('proximo-pago-fecha').textContent =
+        CONFIG.diaPago + ' de ' + MESES[pp.getMonth()] + ' ' + pp.getFullYear();
     }
-    
+
+    function renderPagos() {
+      const pagos = obtenerPagos();
+      const card = document.getElementById('card-pagos');
+      const lista = document.getElementById('lista-pagos');
+
+      if (pagos.length === 0) { card.style.display = 'none'; return; }
+
+      card.style.display = 'block';
+      const ordenados = pagos.slice().sort((a, b) => b.fecha.localeCompare(a.fecha));
+
+      lista.innerHTML = ordenados.map(function (p) {
+        return '<div class="pago-row">' +
+                 '<div>' +
+                   '<div class="pago-monto">' + formatearDinero(Number(p.monto)) + '</div>' +
+                   '<div class="pago-fecha">📅 ' + fechaBonita(p.fecha) + '</div>' +
+                 '</div>' +
+                 '<button class="btn-borrar" onclick="pedirBorrar(\'' + p.id + '\', this)">✕</button>' +
+               '</div>';
+      }).join('');
+    }
+
+    function actualizarTodo() {
+      actualizarUI();
+      renderPagos();
+    }
+
+    // ========================================
+    // MODAL
+    // ========================================
+    function abrirModal() {
+      document.getElementById('input-fecha').value = hoyISO();
+      document.getElementById('input-monto').value = CONFIG.pagoMensual;
+      document.getElementById('modal').classList.add('activo');
+    }
+
+    function cerrarModal() {
+      document.getElementById('modal').classList.remove('activo');
+    }
+
+    function guardarPago() {
+      const fecha = document.getElementById('input-fecha').value;
+      const monto = parseFloat(String(document.getElementById('input-monto').value).replace(',', '.'));
+
+      if (!fecha) { mostrarToast('⚠️ Pon la fecha'); return; }
+      if (!monto || monto <= 0) { mostrarToast('⚠️ Pon un monto válido'); return; }
+
+      const pagos = obtenerPagos();
+      pagos.push({
+        id: Date.now() + '-' + Math.random().toString(36).slice(2, 7),
+        fecha: fecha,
+        monto: monto
+      });
+
+      guardarPagos(pagos);
+      cerrarModal();
+      actualizarTodo();
+      mostrarToast('✅ Pago registrado');
+      ding();
+      if (navigator.vibrate) navigator.vibrate(40);
+    }
+
+    // ========================================
+    // BORRAR (doble toque)
+    // ========================================
+    function pedirBorrar(id, btn) {
+      if (btn.dataset.confirm === '1') {
+        borrarPago(id);
+        return;
+      }
+      btn.dataset.confirm = '1';
+      btn.classList.add('confirmado');
+      btn.textContent = '¿Seguro?';
+      setTimeout(function () {
+        btn.dataset.confirm = '';
+        btn.classList.remove('confirmado');
+        btn.textContent = '✕';
+      }, 3000);
+    }
+
+    function borrarPago(id) {
+      const pagos = obtenerPagos().filter(function (p) { return p.id !== id; });
+      guardarPagos(pagos);
+      actualizarTodo();
+      mostrarToast('🗑️ Pago eliminado');
+    }
+
+    function verHistorial() {
+      const pagos = obtenerPagos();
+      if (pagos.length === 0) { mostrarToast('Aún no registras pagos'); return; }
+      document.getElementById('card-pagos').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // ========================================
+    // FEEDBACK: toast + ding
+    // ========================================
+    let toastTimer;
+    function mostrarToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('activo');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () { t.classList.remove('activo'); }, 2200);
+    }
+
+    function ding() {
+      try {
+        const Ctx = window.AudioContext || window.webkitAudioContext;
+        const ctx = new Ctx();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.type = 'sine';
+        osc.frequency.value = 880;
+        gain.gain.setValueAtTime(0.15, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.35);
+      } catch (e) {}
+    }
+
     // ========================================
     // RECORDATORIO
     // ========================================
     function verificarRecordatorio() {
       const hoy = new Date();
-      const diaActual = hoy.getDate();
-      const progreso = calcularProgreso();
-      
-      const recordatorio = document.getElementById('recordatorio');
-      const recordatorioTexto = document.getElementById('recordatorio-texto');
-      
-      // Si hoy es el día del pago
-      if (diaActual === CONFIG.diaPago) {
-        recordatorio.classList.add('activo', 'urgente');
-        recordatorioTexto.textContent = '¡HOY toca pagar la bocina!';
-      }
-      // Si mañana es el día del pago
-      else if (diaActual === CONFIG.diaPago - 1) {
-        recordatorio.classList.add('activo');
-        recordatorio.classList.remove('urgente');
-        recordatorioTexto.textContent = '¡Mañana toca pagar la bocina!';
+      const manana = new Date();
+      manana.setDate(manana.getDate() + 1);
+
+      const rec = document.getElementById('recordatorio');
+      const txt = document.getElementById('recordatorio-texto');
+
+      if (hoy.getDate() === CONFIG.diaPago) {
+        rec.classList.add('activo', 'urgente');
+        txt.textContent = '¡HOY toca pagar la bocina!';
+      } else if (manana.getDate() === CONFIG.diaPago) {
+        rec.classList.add('activo');
+        rec.classList.remove('urgente');
+        txt.textContent = '¡Mañana toca pagar la bocina!';
       }
     }
-    
+
     // ========================================
-    // INICIALIZACIÓN
+    // INICIO
     // ========================================
-    document.addEventListener('DOMContentLoaded', () => {
-      actualizarUI();
+    document.addEventListener('DOMContentLoaded', function () {
+      actualizarTodo();
       verificarRecordatorio();
     });
   </script>
-  
+
 </body>
 </html>
