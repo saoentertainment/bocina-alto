@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#0a1929">
+  <title>🔊 Bocina Gabriela</title>
+  
+  <style>
+    :root {
+      --bg: #0a1929;
+      --card: #132f4c;
+      --azul: #1976d2;
+      --azul-claro: #64b5f6;
+      --morado: #8e24aa;
+      --verde: #4caf50;
+      --amarillo: #ffca28;
+      --rojo: #ef5350;
+      --texto: #ffffff;
+      --texto-suave: #b0bec5;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--texto);
+      padding: 16px;
+      min-height: 100vh;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    
+    .header h1 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+    
+    .header p {
+      color: var(--texto-suave);
+      font-size: 14px;
+    }
+    
+    .card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    
+    .progress-section {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .progress-bar {
+      background: rgba(255,255,255,0.1);
+      border-radius: 8px;
+      height: 24px;
+      overflow: hidden;
+      margin: 12px 0;
+    }
+    
+    .progress-fill {
+      background: linear-gradient(90deg, var(--azul), var(--azul-claro));
+      height: 100%;
+      width: 0%;
+      transition: width 0.3s;
+    }
+    
+    .progress-text {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--azul-claro);
+    }
+    
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    
+    .stat {
+      text-align: center;
+    }
+    
+    .stat-label {
+      font-size: 12px;
+      color: var(--texto-suave);
+      margin-bottom: 4px;
+    }
+    
+    .stat-value {
+      font-size: 20px;
+      font-weight: bold;
+    }
+    
+    .stat-value.pagado {
+      color: var(--verde);
+    }
+    
+    .stat-value.falta {
+      color: var(--rojo);
+    }
+    
+    .semaforo {
+      text-align: center;
+      font-size: 32px;
+      margin: 16px 0;
+    }
+    
+    .semaforo-texto {
+      font-size: 14px;
+      color: var(--texto-suave);
+      margin-top: 4px;
+    }
+    
+    .proximo-pago {
+      text-align: center;
+      padding: 12px;
+      background: rgba(25, 118, 210, 0.2);
+      border-radius: 8px;
+      margin-top: 16px;
+    }
+    
+    .proximo-pago-label {
+      font-size: 12px;
+      color: var(--texto-suave);
+    }
+    
+    .proximo-pago-fecha {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--azul-claro);
+      margin-top: 4px;
+    }
+    
+    .datos-bancarios {
+      font-size: 14px;
+    }
+    
+    .datos-bancarios h3 {
+      font-size: 16px;
+      margin-bottom: 12px;
+      color: var(--azul-claro);
+    }
+    
+    .dato-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .dato-row:last-child {
+      border-bottom: none;
+    }
+    
+    .dato-label {
+      color: var(--texto-suave);
+    }
+    
+    .dato-value {
+      font-weight: bold;
+      text-align: right;
+    }
+    
+    .cuenta {
+      font-family: 'Courier New', monospace;
+      letter-spacing: 1px;
+      color: var(--amarillo);
+    }
+    
+    .botones {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    
+    .btn {
+      background: var(--azul);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 18px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s;
+      min-height: 60px;
+    }
+    
+    .btn:active {
+      transform: scale(0.98);
+    }
+    
+    .btn-registrar {
+      background: var(--verde);
+    }
+    
+    .btn-reporte {
+      background: var(--morado);
+    }
+    
+    .btn-historial {
+      background: var(--azul);
+    }
+    
+    .recordatorio {
+      background: var(--amarillo);
+      color: #000;
+      padding: 16px;
+      border-radius: 12px;
+      text-align: center;
+      margin-bottom: 16px;
+      display: none; /* Oculto por ahora */
+    }
+    
+    .recordatorio.activo {
+      display: block;
+    }
+    
+    .recordatorio-icono {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+    
+    .recordatorio-texto {
+      font-size: 16px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  
+  <!-- Banner de recordatorio (se activará con JS) -->
+  <div class="recordatorio" id="recordatorio">
+    <div class="recordatorio-icono">🔔</div>
+    <div class="recordatorio-texto">¡Mañana toca pagar la bocina!</div>
+  </div>
+  
+  <!-- Header -->
+  <div class="header">
+    <h1>🔊 Bocina Gabriela</h1>
+    <p>BOCINA AMPLIFICADA ALTO TS415</p>
+    <p>$7,999 · 24 MSI · Banamex</p>
+  </div>
+  
+  <!-- Dashboard -->
+  <div class="card">
+    <div class="progress-section">
+      <div class="progress-text">0 de 24 pagos</div>
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+    </div>
+    
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-label">💰 Pagado</div>
+        <div class="stat-value pagado">$0</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">📉 Falta</div>
+        <div class="stat-value falta">$7,999</div>
+      </div>
+    </div>
+    
+    <div class="semaforo">
+      🟢
+      <div class="semaforo-texto">Al corriente</div>
+    </div>
+    
+    <div class="proximo-pago">
+      <div class="proximo-pago-label">📅 Próximo pago</div>
+      <div class="proximo-pago-fecha">8 de noviembre 2026</div>
+    </div>
+  </div>
+  
+  <!-- Datos bancarios -->
+  <div class="card datos-bancarios">
+    <h3>🏦 Datos para transferencia</h3>
+    <div class="dato-row">
+      <span class="dato-label">Banco:</span>
+      <span class="dato-value">Banamex</span>
+    </div>
+    <div class="dato-row">
+      <span class="dato-label">Beneficiario:</span>
+      <span class="dato-value">Gabriela Aguilar Camacho</span>
+    </div>
+    <div class="dato-row">
+      <span class="dato-label">Cuenta:</span>
+      <span class="dato-value cuenta">5256 7803 1206 2497</span>
+    </div>
+    <div class="dato-row">
+      <span class="dato-label">Monto mensual:</span>
+      <span class="dato-value">$333.29</span>
+    </div>
+  </div>
+  
+  <!-- Botones de acción -->
+  <div class="botones">
+    <button class="btn btn-registrar">➕ Registrar pago</button>
+    <button class="btn btn-reporte">📱 Reporte WhatsApp</button>
+    <button class="btn btn-historial">📋 Ver historial</button>
+  </div>
+  
+</body>
+</html>
