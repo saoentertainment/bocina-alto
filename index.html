@@ -223,11 +223,16 @@
       border-radius: 12px;
       text-align: center;
       margin-bottom: 16px;
-      display: none; /* Oculto por ahora */
+      display: none;
     }
     
     .recordatorio.activo {
       display: block;
+    }
+    
+    .recordatorio.urgente {
+      background: var(--rojo);
+      color: white;
     }
     
     .recordatorio-icono {
@@ -243,10 +248,10 @@
 </head>
 <body>
   
-  <!-- Banner de recordatorio (se activará con JS) -->
+  <!-- Banner de recordatorio -->
   <div class="recordatorio" id="recordatorio">
     <div class="recordatorio-icono">🔔</div>
-    <div class="recordatorio-texto">¡Mañana toca pagar la bocina!</div>
+    <div class="recordatorio-texto" id="recordatorio-texto">¡Mañana toca pagar la bocina!</div>
   </div>
   
   <!-- Header -->
@@ -259,31 +264,31 @@
   <!-- Dashboard -->
   <div class="card">
     <div class="progress-section">
-      <div class="progress-text">0 de 24 pagos</div>
+      <div class="progress-text" id="progress-text">0 de 24 pagos</div>
       <div class="progress-bar">
-        <div class="progress-fill"></div>
+        <div class="progress-fill" id="progress-fill"></div>
       </div>
     </div>
     
     <div class="stats">
       <div class="stat">
         <div class="stat-label">💰 Pagado</div>
-        <div class="stat-value pagado">$0</div>
+        <div class="stat-value pagado" id="stat-pagado">$0</div>
       </div>
       <div class="stat">
         <div class="stat-label">📉 Falta</div>
-        <div class="stat-value falta">$7,999</div>
+        <div class="stat-value falta" id="stat-falta">$7,999</div>
       </div>
     </div>
     
     <div class="semaforo">
-      🟢
-      <div class="semaforo-texto">Al corriente</div>
+      <span id="semaforo-icono">🟢</span>
+      <div class="semaforo-texto" id="semaforo-texto">Al corriente</div>
     </div>
     
     <div class="proximo-pago">
       <div class="proximo-pago-label">📅 Próximo pago</div>
-      <div class="proximo-pago-fecha">8 de noviembre 2026</div>
+      <div class="proximo-pago-fecha" id="proximo-pago-fecha">8 de noviembre 2026</div>
     </div>
   </div>
   
@@ -310,10 +315,163 @@
   
   <!-- Botones de acción -->
   <div class="botones">
-    <button class="btn btn-registrar">➕ Registrar pago</button>
-    <button class="btn btn-reporte">📱 Reporte WhatsApp</button>
-    <button class="btn btn-historial">📋 Ver historial</button>
+    <button class="btn btn-registrar" onclick="alert('Paso 3: Registrar pago')">➕ Registrar pago</button>
+    <button class="btn btn-reporte" onclick="alert('Paso 4: Reporte WhatsApp')">📱 Reporte WhatsApp</button>
+    <button class="btn btn-historial" onclick="alert('Paso 4: Historial')">📋 Ver historial</button>
   </div>
+  
+  <script>
+    // ========================================
+    // CONFIGURACIÓN DE LA COMPRA
+    // ========================================
+    const CONFIG = {
+      producto: 'BOCINA AMPLIFICADA ALTO TS415',
+      fechaCompra: '2026-10-08', // YYYY-MM-DD
+      diaPago: 8, // Día de cada mes que se paga
+      total: 7999,
+      meses: 24,
+      pagoMensual: 333.29,
+      banco: 'Banamex',
+      beneficiario: 'Gabriela Aguilar Camacho',
+      cuenta: '5256 7803 1206 2497'
+    };
+    
+    const STORAGE_KEY = 'bocina_gabriela_pagos';
+    
+    // ========================================
+    // FUNCIONES AUXILIARES
+    // ========================================
+    function formatearDinero(n) {
+      return '$' + n.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+    
+    function obtenerPagos() {
+      const datos = localStorage.getItem(STORAGE_KEY);
+      return datos ? JSON.parse(datos) : [];
+    }
+    
+    function guardarPagos(pagos) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(pagos));
+    }
+    
+    // ========================================
+    // CÁLCULO DE PROGRESO
+    // ========================================
+    function calcularProgreso() {
+      const hoy = new Date();
+      const [year, month, day] = CONFIG.fechaCompra.split('-').map(Number);
+      const fechaCompra = new Date(year, month - 1, day);
+      
+      // Calcular cuántos pagos ya vencieron
+      let mesesVencidos = 0;
+      let fechaComparacion = new Date(fechaCompra);
+      
+      while (true) {
+        fechaComparacion.setMonth(fechaComparacion.getMonth() + 1);
+        if (fechaComparacion <= hoy) {
+          mesesVencidos++;
+        } else {
+          break;
+        }
+      }
+      
+      // Calcular próximo pago
+      const proximoPago = new Date(fechaCompra);
+      proximoPago.setMonth(proximoPago.getMonth() + mesesVencidos + 1);
+      
+      // Calcular total pagado
+      const pagos = obtenerPagos();
+      const totalPagado = pagos.reduce((sum, p) => sum + p.monto, 0);
+      
+      // Calcular cuánto falta
+      const totalFalta = CONFIG.total - totalPagado;
+      
+      // Determinar semáforo
+      const pagosRegistrados = pagos.length;
+      let semaforo = 'verde';
+      let semaforoTexto = 'Al corriente';
+      
+      if (pagosRegistrados < mesesVencidos - 1) {
+        semaforo = 'rojo';
+        semaforoTexto = `${mesesVencidos - pagosRegistrados} meses atrasado`;
+      } else if (pagosRegistrados < mesesVencidos) {
+        semaforo = 'amarillo';
+        semaforoTexto = '1 mes atrasado';
+      }
+      
+      return {
+        mesesVencidos,
+        proximoPago,
+        totalPagado,
+        totalFalta,
+        pagosRegistrados,
+        semaforo,
+        semaforoTexto
+      };
+    }
+    
+    // ========================================
+    // ACTUALIZAR INTERFAZ
+    // ========================================
+    function actualizarUI() {
+      const progreso = calcularProgreso();
+      
+      // Progreso
+      document.getElementById('progress-text').textContent = 
+        `${progreso.pagosRegistrados} de ${CONFIG.meses} pagos`;
+      
+      const porcentaje = (progreso.pagosRegistrados / CONFIG.meses) * 100;
+      document.getElementById('progress-fill').style.width = porcentaje + '%';
+      
+      // Stats
+      document.getElementById('stat-pagado').textContent = formatearDinero(progreso.totalPagado);
+      document.getElementById('stat-falta').textContent = formatearDinero(progreso.totalFalta);
+      
+      // Semáforo
+      const iconos = { verde: '🟢', amarillo: '🟡', rojo: '🔴' };
+      document.getElementById('semaforo-icono').textContent = iconos[progreso.semaforo];
+      document.getElementById('semaforo-texto').textContent = progreso.semaforoTexto;
+      
+      // Próximo pago
+      const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 
+                     'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+      const prox = progreso.proximoPago;
+      document.getElementById('proximo-pago-fecha').textContent = 
+        `${CONFIG.diaPago} de ${meses[prox.getMonth()]} ${prox.getFullYear()}`;
+    }
+    
+    // ========================================
+    // RECORDATORIO
+    // ========================================
+    function verificarRecordatorio() {
+      const hoy = new Date();
+      const diaActual = hoy.getDate();
+      const progreso = calcularProgreso();
+      
+      const recordatorio = document.getElementById('recordatorio');
+      const recordatorioTexto = document.getElementById('recordatorio-texto');
+      
+      // Si hoy es el día del pago
+      if (diaActual === CONFIG.diaPago) {
+        recordatorio.classList.add('activo', 'urgente');
+        recordatorioTexto.textContent = '¡HOY toca pagar la bocina!';
+      }
+      // Si mañana es el día del pago
+      else if (diaActual === CONFIG.diaPago - 1) {
+        recordatorio.classList.add('activo');
+        recordatorio.classList.remove('urgente');
+        recordatorioTexto.textContent = '¡Mañana toca pagar la bocina!';
+      }
+    }
+    
+    // ========================================
+    // INICIALIZACIÓN
+    // ========================================
+    document.addEventListener('DOMContentLoaded', () => {
+      actualizarUI();
+      verificarRecordatorio();
+    });
+  </script>
   
 </body>
 </html>
