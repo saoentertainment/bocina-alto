@@ -384,7 +384,7 @@
                    'julio','agosto','septiembre','octubre','noviembre','diciembre'];
 
 function formatearDinero(n) {
-      return '$*' + Number(n).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '*';
+      return '*$' + Number(n).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '*';
     }
 
     function hoyISO() {
@@ -568,7 +568,9 @@ function formatearDinero(n) {
       const icono = iconos[pr.semaforo];
 
       const mensaje = 
-        '🔊 Bocina ALTO TS415 · Progreso\n' + 
+       '🔊 Bocina ALTO TS415\n' +
+'━━━━━━━━━━━━━━━━━━━━━━━\n' +
+'Progreso de Pagos\n' +
         '━━━━━━━━━━━━━━━━━━━━━━━\n' +
         '📊 ' + pr.pagosRegistrados + ' de ' + CONFIG.meses + ' pagos\n' +
         '💰 Pagado: ' + formatearDinero(pr.totalPagado) + '\n' +
