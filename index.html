@@ -6,6 +6,14 @@
   <meta name="theme-color" content="#0a1929">
   <title>🔊 Bocina Gabriela</title>
 
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Bocina Gabriela">
+  <link rel="apple-touch-icon" href="icon-192.png">
+
   <style>
     :root {
       --bg: #0a1929;
@@ -87,15 +95,28 @@
     .datos-bancarios { font-size: 14px; }
     .datos-bancarios h3 { font-size: 16px; margin-bottom: 12px; color: var(--azul-claro); }
 
+    .seccion-cuenta {
+      background: rgba(255,255,255,0.05);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+
+    .seccion-cuenta h4 {
+      font-size: 14px;
+      margin-bottom: 8px;
+      color: var(--verde);
+    }
+
     .dato-row {
       display: flex;
       justify-content: space-between;
-      padding: 8px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
     }
     .dato-row:last-child { border-bottom: none; }
-    .dato-label { color: var(--texto-suave); }
-    .dato-value { font-weight: bold; text-align: right; }
+    .dato-label { color: var(--texto-suave); font-size: 13px; }
+    .dato-value { font-weight: bold; text-align: right; font-size: 13px; }
     .cuenta { font-family: 'Courier New', monospace; letter-spacing: 1px; color: var(--amarillo); }
 
     .botones { display: flex; flex-direction: column; gap: 12px; margin-top: 24px; }
@@ -131,7 +152,6 @@
     .recordatorio-icono { font-size: 32px; margin-bottom: 8px; }
     .recordatorio-texto { font-size: 16px; font-weight: bold; }
 
-    /* ===== MODAL REGISTRAR PAGO ===== */
     .modal {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -180,7 +200,6 @@
     .btn-cancelar { background: rgba(255,255,255,0.12); color: var(--texto); }
     .btn-guardar { background: var(--verde); color: #fff; }
 
-    /* ===== TOAST ===== */
     .toast {
       position: fixed;
       left: 50%;
@@ -199,7 +218,6 @@
     }
     .toast.activo { transform: translateX(-50%) translateY(0); }
 
-    /* ===== LISTA DE PAGOS ===== */
     .pago-row {
       display: flex;
       justify-content: space-between;
@@ -227,20 +245,17 @@
 </head>
 <body>
 
-  <!-- Banner de recordatorio -->
   <div class="recordatorio" id="recordatorio">
     <div class="recordatorio-icono">🔔</div>
     <div class="recordatorio-texto" id="recordatorio-texto">¡Mañana toca pagar la bocina!</div>
   </div>
 
-  <!-- Header -->
   <div class="header">
     <h1>🔊 Bocina Gabriela</h1>
     <p>BOCINA AMPLIFICADA ALTO TS415</p>
     <p>$7,999 · 24 MSI · Banamex</p>
   </div>
 
-  <!-- Dashboard -->
   <div class="card">
     <div class="progress-section">
       <div class="progress-text" id="progress-text">0 de 24 pagos</div>
@@ -273,41 +288,58 @@
     </div>
   </div>
 
-  <!-- Datos bancarios -->
   <div class="card datos-bancarios">
     <h3>🏦 Datos para transferencia</h3>
-    <div class="dato-row">
-      <span class="dato-label">Banco:</span>
-      <span class="dato-value">Banamex</span>
+    
+    <div class="seccion-cuenta">
+      <h4>💳 De (Origen)</h4>
+      <div class="dato-row">
+        <span class="dato-label">Banco:</span>
+        <span class="dato-value">Mercado Pago W</span>
+      </div>
+      <div class="dato-row">
+        <span class="dato-label">Titular:</span>
+        <span class="dato-value">Luis Javier Lopez Gonzalez</span>
+      </div>
+      <div class="dato-row">
+        <span class="dato-label">CLABE:</span>
+        <span class="dato-value cuenta">722969010161414588</span>
+      </div>
     </div>
-    <div class="dato-row">
-      <span class="dato-label">Beneficiario:</span>
-      <span class="dato-value">Gabriela Aguilar Camacho</span>
+
+    <div class="seccion-cuenta">
+      <h4>🏦 Para (Destino)</h4>
+      <div class="dato-row">
+        <span class="dato-label">Banco:</span>
+        <span class="dato-value">Banamex</span>
+      </div>
+      <div class="dato-row">
+        <span class="dato-label">Titular:</span>
+        <span class="dato-value">Gabriela Aguilar Camacho</span>
+      </div>
+      <div class="dato-row">
+        <span class="dato-label">Cuenta:</span>
+        <span class="dato-value cuenta">5256 7803 1206 2497</span>
+      </div>
     </div>
+
     <div class="dato-row">
-      <span class="dato-label">Cuenta:</span>
-      <span class="dato-value cuenta">5256 7803 1206 2497</span>
-    </div>
-    <div class="dato-row">
-      <span class="dato-label">Monto mensual:</span>
+      <span class="dato-label">💰 Monto mensual:</span>
       <span class="dato-value">$333.29</span>
     </div>
   </div>
 
-  <!-- Tus pagos -->
   <div class="card" id="card-pagos" style="display:none;">
     <h3 class="subtitulo">📋 Tus pagos</h3>
     <div id="lista-pagos"></div>
   </div>
 
-  <!-- Botones -->
   <div class="botones">
     <button class="btn btn-registrar" onclick="abrirModal()">➕ Registrar pago</button>
-    <button class="btn btn-reporte" onclick="mostrarToast('📱 Paso 4: Reporte WhatsApp')">📱 Reporte WhatsApp</button>
+    <button class="btn btn-reporte" onclick="generarReporte()">📱 Reporte WhatsApp</button>
     <button class="btn btn-historial" onclick="verHistorial()">📋 Ver historial</button>
   </div>
 
-  <!-- Modal registrar pago -->
   <div class="modal" id="modal">
     <div class="modal-caja">
       <h2>➕ Registrar pago</h2>
@@ -328,9 +360,6 @@
 
   <div class="toast" id="toast">✅ Pago registrado</div>
     <script>
-    // ========================================
-    // CONFIGURACIÓN DE LA COMPRA
-    // ========================================
     const CONFIG = {
       producto: 'BOCINA AMPLIFICADA ALTO TS415',
       fechaCompra: '2026-10-08',
@@ -338,18 +367,22 @@
       total: 7999,
       meses: 24,
       pagoMensual: 333.29,
-      banco: 'Banamex',
-      beneficiario: 'Gabriela Aguilar Camacho',
-      cuenta: '5256 7803 1206 2497'
+      origen: {
+        banco: 'Mercado Pago W',
+        titular: 'Luis Javier Lopez Gonzalez',
+        cuenta: '722969010161414588'
+      },
+      destino: {
+        banco: 'Banamex',
+        titular: 'Gabriela Aguilar Camacho',
+        cuenta: '5256 7803 1206 2497'
+      }
     };
 
     const STORAGE_KEY = 'bocina_gabriela_pagos';
     const MESES = ['enero','febrero','marzo','abril','mayo','junio',
                    'julio','agosto','septiembre','octubre','noviembre','diciembre'];
 
-    // ========================================
-    // AUXILIARES
-    // ========================================
     function formatearDinero(n) {
       return '$' + Number(n).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
@@ -375,17 +408,13 @@
       localStorage.setItem(STORAGE_KEY, JSON.stringify(pagos));
     }
 
-    // ========================================
-    // CÁLCULO DE PROGRESO
-    // ========================================
     function calcularProgreso() {
       const hoy = new Date();
-      hoy.setHours(12, 0, 0, 0); // fix de fechas: mediodía
+      hoy.setHours(12, 0, 0, 0);
 
       const p = CONFIG.fechaCompra.split('-').map(Number);
       const anio = p[0], mes = p[1];
 
-      // Primer vencimiento: mes siguiente a la compra, día CONFIG.diaPago
       let prox = new Date(anio, mes, CONFIG.diaPago, 12, 0, 0);
 
       let mesesVencidos = 0;
@@ -425,9 +454,6 @@
       };
     }
 
-    // ========================================
-    // INTERFAZ
-    // ========================================
     function actualizarUI() {
       const pr = calcularProgreso();
 
@@ -473,9 +499,6 @@
       renderPagos();
     }
 
-    // ========================================
-    // MODAL
-    // ========================================
     function abrirModal() {
       document.getElementById('input-fecha').value = hoyISO();
       document.getElementById('input-monto').value = CONFIG.pagoMensual;
@@ -508,9 +531,6 @@
       if (navigator.vibrate) navigator.vibrate(40);
     }
 
-    // ========================================
-    // BORRAR (doble toque)
-    // ========================================
     function pedirBorrar(id, btn) {
       if (btn.dataset.confirm === '1') {
         borrarPago(id);
@@ -539,9 +559,60 @@
       document.getElementById('card-pagos').scrollIntoView({ behavior: 'smooth' });
     }
 
-    // ========================================
-    // FEEDBACK: toast + ding
-    // ========================================
+    function generarReporte() {
+      const pr = calcularProgreso();
+      const pp = pr.proximoPago;
+      const proximoFecha = CONFIG.diaPago + ' de ' + MESES[pp.getMonth()] + ' ' + pp.getFullYear();
+
+      const iconos = { verde: '🟢', amarillo: '🟡', rojo: '🔴' };
+      const icono = iconos[pr.semaforo];
+
+      const mensaje = 
+        '🔊 Bocina Gabriela · Progreso\n' +
+        '━━━━━━━━━━━━━━━━━━━━━━━\n' +
+        '📊 ' + pr.pagosRegistrados + ' de ' + CONFIG.meses + ' pagos\n' +
+        '💰 Pagado: ' + formatearDinero(pr.totalPagado) + '\n' +
+        '📉 Falta: ' + formatearDinero(pr.totalFalta) + '\n' +
+        icono + ' ' + pr.semaforoTexto + '\n' +
+        '\n' +
+        '💳 De: ' + CONFIG.origen.banco + '\n' +
+        '   ' + CONFIG.origen.titular + '\n' +
+        '   ' + CONFIG.origen.cuenta + '\n' +
+        '\n' +
+        '🏦 Para: ' + CONFIG.destino.banco + '\n' +
+        '   ' + CONFIG.destino.titular + '\n' +
+        '   ' + CONFIG.destino.cuenta + '\n' +
+        '\n' +
+        '📅 Próximo pago: ' + proximoFecha;
+
+      if (navigator.share) {
+        navigator.share({
+          title: '🔊 Bocina Gabriela',
+          text: mensaje
+        }).catch(function() {
+          copiarAlPortapapeles(mensaje);
+        });
+      } else {
+        copiarAlPortapapeles(mensaje);
+      }
+    }
+
+    function copiarAlPortapapeles(texto) {
+      const textarea = document.createElement('textarea');
+      textarea.value = texto;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand('copy');
+        mostrarToast('📋 Reporte copiado');
+      } catch (err) {
+        mostrarToast('⚠️ No se pudo copiar');
+      }
+      document.body.removeChild(textarea);
+    }
+
     let toastTimer;
     function mostrarToast(msg) {
       const t = document.getElementById('toast');
@@ -568,9 +639,6 @@
       } catch (e) {}
     }
 
-    // ========================================
-    // RECORDATORIO
-    // ========================================
     function verificarRecordatorio() {
       const hoy = new Date();
       const manana = new Date();
@@ -589,9 +657,6 @@
       }
     }
 
-    // ========================================
-    // INICIO
-    // ========================================
     document.addEventListener('DOMContentLoaded', function () {
       actualizarTodo();
       verificarRecordatorio();
