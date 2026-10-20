@@ -383,8 +383,8 @@
     const MESES = ['enero','febrero','marzo','abril','mayo','junio',
                    'julio','agosto','septiembre','octubre','noviembre','diciembre'];
 
-    function formatearDinero(n) {
-      return '$' + Number(n).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+function formatearDinero(n) {
+      return '$*' + Number(n).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '*';
     }
 
     function hoyISO() {
@@ -568,7 +568,7 @@
       const icono = iconos[pr.semaforo];
 
       const mensaje = 
-        '🔊 Bocina Gabriela · Progreso\n' +
+        '🔊 Bocina ALTO TS415 · Progreso\n' + 
         '━━━━━━━━━━━━━━━━━━━━━━━\n' +
         '📊 ' + pr.pagosRegistrados + ' de ' + CONFIG.meses + ' pagos\n' +
         '💰 Pagado: ' + formatearDinero(pr.totalPagado) + '\n' +
